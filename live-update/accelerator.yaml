@@ -1,0 +1,63 @@
+accelerator:
+  displayName: TAP Initialize
+
+  options:
+    - name: liveUpdateIDESupport
+      inputType: checkbox
+      label: Include TAP IDE Support for Java Workloads
+      dataType: boolean
+      defaultValue: true
+
+    - name: sourceRepositoryPrefix
+      inputType: text
+      label: The source image repository prefix to use when pushing the source
+      description: The prefix for the source image repository where source can be stored during development
+      defaultValue: dev.local
+      dependsOn:
+        name: liveUpdateIDESupport
+
+    - name: k8sContext
+      inputType: text
+      label: K8s Context
+      description: Kubernetes Context used to deploy App
+      defaultValue: tap-iterate-admin
+
+    - name: namespaceName
+      inputType: text
+      label: Namespace Name
+      description: Namespace on Kubernetes cluster to deploy App
+      defaultValue: ddarocha
+
+engine:
+  merge:
+    - condition: "#liveUpdateIDESupport"
+      include: ["Tiltfile"]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: my-project
+              with: "#artifactId"
+        - type: ReplaceText
+          substitutions:
+            - text: dev.local
+              with: "#sourceRepositoryPrefix"
+        - type: ReplaceText
+          substitutions:
+            - text: context-name
+              with: "#k8sContext"
+        - type: ReplaceText
+          substitutions:
+            - text: namespace-name
+              with: "#namespaceName"
+
+    - condition: "#liveUpdateIDESupport"
+      include: ["DEPLOYING.md"]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: my-project
+              with: "#artifactId"
+        - type: ReplaceText
+          substitutions:
+            - text: dev.local
+              with: "#sourceRepositoryPrefix"
