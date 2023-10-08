@@ -8,24 +8,16 @@ accelerator:
       dataType: boolean
       defaultValue: true
 
-    - name: sourceRepositoryPrefix
-      inputType: text
-      label: The source image repository prefix to use when pushing the source
-      description: The prefix for the source image repository where source can be stored during development
-      defaultValue: dev.local
-      dependsOn:
-        name: liveUpdateIDESupport
-
     - name: k8sContext
       inputType: text
       label: K8s Context
-      description: Kubernetes Context used to deploy App
+      description: Kubernetes Context to deploy the App
       defaultValue: tap-iterate-admin
 
     - name: namespaceName
       inputType: text
       label: Namespace Name
-      description: Namespace on Kubernetes cluster to deploy App
+      description: Namespace on Kubernetes to deploy the App
       defaultValue: ddarocha
 
 engine:
@@ -37,10 +29,6 @@ engine:
           substitutions:
             - text: my-project
               with: "#artifactId"
-        - type: ReplaceText
-          substitutions:
-            - text: dev.local
-              with: "#sourceRepositoryPrefix"
         - type: ReplaceText
           substitutions:
             - text: context-name
@@ -57,7 +45,3 @@ engine:
           substitutions:
             - text: my-project
               with: "#artifactId"
-        - type: ReplaceText
-          substitutions:
-            - text: dev.local
-              with: "#sourceRepositoryPrefix"
