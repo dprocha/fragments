@@ -43,4 +43,5 @@ engine:
               with: |
                 '${startOfDependencies}
                     runtimeOnly("com.mysql:mysql-connector-j")${existingDependencies}'
-    
+
+      - include: [ "docker-compose.yaml" ]

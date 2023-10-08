@@ -44,3 +44,5 @@ engine:
               with: |
                 '${startOfDependencies}
                     runtimeOnly("org.postgresql:postgresql")${existingDependencies}'
+
+      - include: [ "docker-compose.yaml" ]
